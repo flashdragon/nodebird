@@ -18,7 +18,7 @@ exports.renderMain = async (req,res,next)=>{
                 attibutes:['id','nick'],
             },
             order: [['createdAt','DESC']]
-        })
+        });
         res.render('main', {
             title:'NodeBird',
             twits:posts,

@@ -30,3 +30,16 @@ exports.uploadPost = async (req, res, next) => {
         next(error);
     }
 };
+
+
+exports.deletePost = async (req, res) => {
+    try{
+        const del = await Post.destroy({where:{ id: req.body.postId}});
+        if(del){
+            res.redirect('/');
+        }
+    }catch(error){
+        console.error(error);
+        next(error);
+    }
+};
