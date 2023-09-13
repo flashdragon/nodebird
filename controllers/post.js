@@ -53,16 +53,16 @@ exports.goodPost = async (req, res, next) => {
         const user = await User.findOne({where:{id:userId}});
         if(user){
             const exGood = await Good.findOne({where:{
-                user:userId,
-                post:postId,
+                userId:userId,
+                postId:postId,
             }});
             const post= await Post.findOne({
                 where:{id:postId}
             });
             if(exGood){
-                Good.destroy({where:{
-                    user:userId,
-                    post:postId,
+                const del = await Good.destroy({where:{
+                    userId:userId,
+                    postId:postId,
                 }});
                 const down = await Post.update({
                     good:post.good-1
@@ -70,9 +70,9 @@ exports.goodPost = async (req, res, next) => {
                     where:{id:postId}
                 });
             }else{
-                Good.create({
-                    user:userId,
-                    post:postId,
+                const create = await Good.create({
+                    userId:userId,
+                    postId:postId,
                 });
                 const up = await Post.update({
                     good:post.good+1

@@ -31,7 +31,7 @@ class Post extends Sequelize.Model {
     db.Post.belongsTo(db.User);
     db.Post.belongsToMany(db.Hashtag, {through: 'PostHashtag'});
     db.Post.belongsToMany(db.User, {
-      foreignKey: 'user',
+      foreignKey: 'postId',
       as: 'user',
       through: 'Good',
     });

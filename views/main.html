@@ -134,7 +134,7 @@
       tag.addEventListener('click', function() {
         const myId = document.querySelector('#my-id');
         if (myId) {
-          const userId = tag.parentNode.querySelector('.twit-user-id').value;
+          const userId = myId.value;
           const postId = tag.parentNode.querySelector('.twit-id').value;
           axios.post(`/post/good`, {userId, postId})
             .then(() => {
