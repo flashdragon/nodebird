@@ -56,29 +56,18 @@ exports.goodPost = async (req, res, next) => {
                 userId:userId,
                 postId:postId,
             }});
-            const post= await Post.findOne({
-                where:{id:postId}
-            });
             if(exGood){
                 const del = await Good.destroy({where:{
                     userId:userId,
                     postId:postId,
                 }});
-                const down = await Post.update({
-                    good:post.good-1
-                },{
-                    where:{id:postId}
-                });
+                const down = await Post.decrement({good:1},{where:{id:postId}});
             }else{
                 const create = await Good.create({
                     userId:userId,
                     postId:postId,
                 });
-                const up = await Post.update({
-                    good:post.good+1
-                },{
-                    where:{id:postId}
-                });
+                const up = await Post.increment({good:1},{where:{id:postId}});
             }
             res.redirect('/');
         }else{
