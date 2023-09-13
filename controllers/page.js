@@ -15,7 +15,7 @@ exports.renderMain = async (req,res,next)=>{
         const posts = await Post.findAll({
             include:{
                 model:User,
-                attibutes:['id','nick'],
+                attibutes:['id','nick','good'],
             },
             order: [['createdAt','DESC']]
         });

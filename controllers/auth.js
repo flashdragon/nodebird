@@ -49,9 +49,6 @@ exports.logout = (req, res) => {
 
 exports.edit = async (req, res) => {
   const { email, nick, password } = req.body;
-  console.log("11111111111");
-  console.log(email,nick,password);
-  console.log("111111111111");
   try {
     const hash = await bcrypt.hash(password, 12); 
     const exUser = await User.update({

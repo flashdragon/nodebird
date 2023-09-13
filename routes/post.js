@@ -4,7 +4,7 @@ const { isLoggedIn, isNotLoggedIn } = require('../middlewares');
 const fs = require('fs');
 const multer = require('multer');
 const path = require('path');
-const { afterUploadImage, uploadPost, deletePost } = require('../controllers/post')
+const { afterUploadImage, uploadPost, deletePost, goodPost } = require('../controllers/post')
 
 
 try{
@@ -34,6 +34,9 @@ router.post('/delete', isLoggedIn, deletePost);
 
 const upload2 = multer();
 router.post('/', isLoggedIn, upload2.none(), uploadPost);
+
+
+router.post('/good', isLoggedIn, goodPost);
 
 
 module.exports = router;

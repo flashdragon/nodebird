@@ -11,6 +11,10 @@ class Post extends Sequelize.Model {
         type: Sequelize.STRING(200),
         allowNull: true,
       },
+      good:{
+        type: Sequelize.INTEGER,
+        defaultValue:0,
+      }
     }, {
       sequelize,
       timestamps: true,
@@ -26,6 +30,11 @@ class Post extends Sequelize.Model {
   static associate(db) {
     db.Post.belongsTo(db.User);
     db.Post.belongsToMany(db.Hashtag, {through: 'PostHashtag'});
+    db.Post.belongsToMany(db.User, {
+      foreignKey: 'user',
+      as: 'user',
+      through: 'Good',
+    });
   }
 }
 
