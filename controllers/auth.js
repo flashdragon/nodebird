@@ -4,16 +4,24 @@ const User = require('../models/user');
 
 exports.join = async (req, res, next) => {
   const { email, nick, password } = req.body;
+  let redisClient=req.redis;
   try {
-    const exUser = await User.findOne({ where: { email } });
+    const exUser = await redisClient.get(`user:${email}`);
     if (exUser) {
       return res.redirect('/join?error=exist');
     }
     const hash = await bcrypt.hash(password, 12);
-    await User.create({
+    const newUser = await User.create({
       email,
       nick,
       password: hash,
+    });
+    redisClient.set(`user:${newUser.email}`,JSON.stringify(newUser),(err)=>{
+      if(err){
+        console.error(err);
+      }else{
+        console.log(`redis에 ${newUser.id}번 유저 넣기 성공`);
+      }
     });
     return res.redirect('/');
   } catch (error) {

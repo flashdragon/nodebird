@@ -6,6 +6,8 @@ const session = require('express-session');
 const nunjucks = require('nunjucks');
 const dotenv = require('dotenv');
 const passport = require('passport');
+const redis = require('ioredis');
+const RedisStore = require('connect-redis').default;
 const {sequelize} = require('./models');
 
 
@@ -33,6 +35,26 @@ sequelize.sync({force:false})
     .catch((err)=>{
         console.error(err);
     })
+
+
+const redisClient = redis.createClient({
+    host: process.env.redisHost,
+    port: process.env.redisPort,
+    password: process.env.redisPassword,
+    legacyMode: true,
+ });
+ redisClient.on('connect', () => {
+    console.info('Redis connected!');
+ });
+ redisClient.on('error', (err) => {
+    console.error('Redis Client Error', err);
+ });
+
+
+app.use((req,res,next)=>{
+    req.redis=redisClient;
+    next();
+})
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname,'public')));
 app.use('/img', express.static(path.join(__dirname,'uploads')));
@@ -43,6 +65,7 @@ app.use(session({
     resave:false,
     saveUninitialized:false,
     secret:process.env.COOKIE_SECRET,
+    store: new RedisStore({client:redisClient, prefix:'session'}),
     cookie:{
         httpOnly:true,
         secure:false,

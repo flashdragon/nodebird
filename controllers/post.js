@@ -36,6 +36,7 @@ exports.uploadPost = async (req, res, next) => {
 
 exports.deletePost = async (req, res, next) => {
     try{
+        const delGood = await Good.destroy({where:{postId:req.body.postId}});
         const del = await Post.destroy({where:{ id: req.body.postId}});
         if(del){
             res.redirect('/');
