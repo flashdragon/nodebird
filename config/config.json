@@ -8,8 +8,8 @@
   },
   "test": {
     "username": "root",
-    "password": null,
-    "database": "database_test",
+    "password": "1q2w3e4r5t",
+    "database": "nodebird_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

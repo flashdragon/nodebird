@@ -65,7 +65,7 @@ app.use(session({
     resave:false,
     saveUninitialized:false,
     secret:process.env.COOKIE_SECRET,
-    store: new RedisStore({client:redisClient, prefix:'session'}),
+    store: new RedisStore({client:redisClient, prefix:'session', ttl:30}),
     cookie:{
         httpOnly:true,
         secure:false,
@@ -94,6 +94,5 @@ app.use((err,req,res,next)=>{
     res.render('error');
 });
 
-app.listen(app.get('port'),()=>{
-    console.log(app.get('port'), '번 포트에서 대기 중');
-});
+
+module.exports = app;

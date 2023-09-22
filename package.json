@@ -2,10 +2,11 @@
   "name": "nodebird",
   "version": "0.0.1",
   "description": "익스프레스로 만드는 노드버드",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon app.js",
-    "test": "jest"
+    "start": "nodemon server.js",
+    "test": "jest",
+    "coverage": "jest --coverage"
   },
   "author": "yong",
   "license": "MIT",
@@ -29,7 +30,9 @@
     "sequelize-cli": "^6.6.1"
   },
   "devDependencies": {
+    "artillery": "^2.0.0-37",
     "jest": "^29.7.0",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "supertest": "^6.3.3"
   }
 }
